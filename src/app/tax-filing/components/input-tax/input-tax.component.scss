@@ -1,0 +1,30 @@
+.card {
+    justify-content: center;
+    max-width: 40rem;
+}
+
+span .red-color {
+    color: red !important;
+}
+
+.text-input-tax {
+    width: 8rem;
+}
+
+.text-input-thb {
+    width: 6.25rem;
+}
+
+/* webkit solution */
+::-webkit-input-placeholder { text-align:right; }
+/* mozilla solution */
+input:-moz-placeholder { text-align:right; }
+
+input { 
+    text-align: right; 
+}
+
+.btn {
+    border-radius: 20px!important;
+    width: 6.25rem;
+}
