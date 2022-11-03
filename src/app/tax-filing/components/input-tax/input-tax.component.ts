@@ -23,10 +23,11 @@ export class InputTaxComponent implements OnInit {
   yearSelect = year;
   typeSelect = type;
   monthNow: string | any;
+  taxAmountData = 0;
 
   constructor(private taxService: TaxService, private router: Router) {
     let monthList = new Date().getMonth() + 1;
-    this.monthNow = monthList.toString()
+    this.monthNow = monthList.toString();
   }
 
   ngOnInit(): void {
@@ -49,19 +50,6 @@ export class InputTaxComponent implements OnInit {
     return this.formTax.controls;
   }
 
-  get surcharge() {
-    return Math.ceil((this.f.saleAmount.value * 0.1) / 0.05) * 0.05;
-  }
-
-  get value() {
-    return this.f.saleAmount.value;
-  }
-
-  get totalAmount() {
-    return Number(this.surcharge + this.f.taxAmount.value + 200);
-  }
-
-
   formatNumber(event: any) {
     if (event.target.value) {
       const name = event.target.name;
@@ -79,6 +67,34 @@ export class InputTaxComponent implements OnInit {
         this.formTax.patchValue({
           taxAmount: vatSet,
         });
+
+        this.taxAmountData = this.formTax.get('taxAmount')?.value;
+      }
+
+      if (name === 'taxAmount') {
+        // console.log(Number(event.target.value), 'ค่าใหม่');
+        // console.log(Number(this.taxAmountData), 'ค่าเก่า');
+        // console.log(Number(this.taxAmountData) + 20, 'มากกว่า 20');
+        // console.log(Number(this.taxAmountData) - 20, 'น้อยกว่า 20');
+
+        if (Number(event.target.value) > Number(this.taxAmountData) + 20) {
+          alert('ส่วนต่าง taxAmount มากกว่า 20')
+          return this.formTax.patchValue({
+            taxAmount: String(
+              parseFloat(String(this.taxAmountData)).toFixed(2)
+            ),
+          });
+        }
+
+        if (Number(event.target.value) < Number(this.taxAmountData) - 20) {
+          alert('ส่วนต่าง taxAmount น้อยกว่า 20')
+          return this.formTax.patchValue({
+            taxAmount: String(
+              parseFloat(String(this.taxAmountData)).toFixed(2)
+            ),
+          });
+        }
+        console.log(this.taxAmountData, 'this.taxAmountData');
       }
 
       const surchargeCalculator = String(
@@ -90,17 +106,19 @@ export class InputTaxComponent implements OnInit {
         parseFloat(String(total)).toFixed(2)
       );
 
-      const penalty = String(parseFloat(String(this.f.penalty.value)).toFixed(2));
+      const penalty = String(
+        parseFloat(String(this.f.penalty.value)).toFixed(2)
+      );
 
-      console.log(Number(totalAmountCalculator), 'totalAmountCalculator');
-      console.log(Number(surchargeCalculator), 'surchargeCalculator');
-      console.log(penalty, 'this.f.penalty.value');
+      // console.log(Number(totalAmountCalculator), 'totalAmountCalculator');
+      // console.log(Number(surchargeCalculator), 'surchargeCalculator');
+      // console.log(penalty, 'this.f.penalty.value');
 
       this.formTax.patchValue({
         [name]: changeNumber,
         surcharge: surchargeCalculator,
         totalAmount: totalAmountCalculator,
-        penalty: penalty
+        penalty: penalty,
       });
     }
   }
@@ -109,7 +127,6 @@ export class InputTaxComponent implements OnInit {
     this.filingType = event.target.value;
   }
 
-  validatorChecked() {}
 
   nextStep() {
     const typeNumber = Number(this.filingType);
@@ -130,16 +147,21 @@ export class InputTaxComponent implements OnInit {
     if (this.formTax.valid) {
       this.nextStep();
     } else {
-      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     }
   }
   validateBtn(): boolean {
     const typeNumber = Number(this.filingType);
-    if (this.formTax.value.penalty && this.formTax.value.saleAmount && this.formTax.value.surcharge && this.formTax.value.taxAmount && this.formTax.value.totalAmount) {
-      return false
+    if (
+      this.formTax.value.penalty &&
+      this.formTax.value.saleAmount &&
+      this.formTax.value.surcharge &&
+      this.formTax.value.taxAmount &&
+      this.formTax.value.totalAmount
+    ) {
+      return false;
     } else {
-      return true
+      return true;
     }
   }
-
 }
