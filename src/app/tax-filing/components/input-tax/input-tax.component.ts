@@ -22,8 +22,12 @@ export class InputTaxComponent implements OnInit {
   monthSelect = month;
   yearSelect = year;
   typeSelect = type;
+  monthNow: string | any;
 
-  constructor(private taxService: TaxService, private router: Router) {}
+  constructor(private taxService: TaxService, private router: Router) {
+    let monthList = new Date().getMonth() + 1;
+    this.monthNow = monthList.toString()
+  }
 
   ngOnInit(): void {
     // this.initDateForm()
@@ -133,4 +137,20 @@ export class InputTaxComponent implements OnInit {
   backStep() {
     this.filingType = '0';
   }
+  validateForm() {
+    if (this.formTax.value.penalty && this.formTax.value.saleAmount && this.formTax.value.surcharge && this.formTax.value.taxAmount && this.formTax.value.totalAmount) {
+      this.nextStep();
+    } else {
+      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    }
+  }
+  validateBtn(): boolean {
+    const typeNumber = Number(this.filingType);
+    if (this.formTax.value.penalty && this.formTax.value.saleAmount && this.formTax.value.surcharge && this.formTax.value.taxAmount && this.formTax.value.totalAmount) {
+      return false
+    } else {
+      return true
+    }
+  }
+
 }
