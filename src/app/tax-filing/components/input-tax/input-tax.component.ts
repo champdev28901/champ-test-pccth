@@ -138,7 +138,7 @@ export class InputTaxComponent implements OnInit {
     this.filingType = '0';
   }
   validateForm() {
-    if (this.formTax.value.penalty && this.formTax.value.saleAmount && this.formTax.value.surcharge && this.formTax.value.taxAmount && this.formTax.value.totalAmount) {
+    if (this.formTax.valid) {
       this.nextStep();
     } else {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
