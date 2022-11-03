@@ -33,7 +33,6 @@ export class TaxService {
       };
     }
     this.taxJson = taxString;
-    console.log(taxString)
   }
 
   taxGet() {

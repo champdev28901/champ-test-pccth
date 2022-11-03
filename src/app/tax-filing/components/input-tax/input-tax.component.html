@@ -1,142 +1,209 @@
 <div class="card p-4">
     <b>1. Tax Filing Detail</b>
     <hr class="my-auto">
-    <div class="my-3">
-        <div class="mb-2">Type of Filing <span class="red-color">*</span></div>
-        <div class="d-flex">
-            <div class="form-check mr-5">
-                <input class="form-check-input" type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    value="0"
-                    (change)="onChange($event)" checked>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Ordinary Filing
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault2"
-                    value="1"
-                    (change)="onChange($event)">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Additional Filing
-                </label>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="my-3">
-        <form [formGroup]="formDate">
-
-            <div class="d-flex">
-                <div>
-                    <div class="mb-2" *ngIf="filingType === '0'">VAT Month <span
-                            class="red-color">*</span></div>
-                    <div class="mb-2" *ngIf="filingType === '1'">Tax Month <span
-                            class="red-color">*</span></div>
-                    <div class="d-flex">
-
-                        <select class="form-control mr-2 text-input-tax"
-                            formControlName="month">
-                            <ng-container *ngFor="let months of
-                                monthSelect">
-                                <option [ngValue]="months">{{months.Text}}</option>
-                            </ng-container>
-                        </select>
-
-                        <select class="form-control text-input-tax"
-                            formControlName="year">
-                            <ng-container *ngFor="let years of yearSelect">
-                                <option [ngValue]="years">{{years}}</option>
-                            </ng-container>
-                        </select>
-
+        <div class="my-3">
+            <div class="mb-2">Type of Filing <span class="red-color">*</span></div>
+            <div class="row px-4">
+                <div class="col-sm form-check">
+                    <input class="form-check-input" type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value="0"
+                        (change)="onChange($event)" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Ordinary Filing
+                    </label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16"
+                        fill="currentColor" class="bi bi-question-circle-fill
+                        ml-2"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496
+                            6.033h.825c.138
+                            0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686
+                            0
+                            1.314.343 1.314 1.168 0 .635-.374.927-.965
+                            1.371-.673.489-1.206 1.06-1.168
+                            1.987l.003.217a.25.25 0 0 0
+                            .25.246h.811a.25.25 0 0 0
+                            .25-.25v-.105c0-.718.273-.927
+                            1.01-1.486.609-.463 1.244-.977 1.244-2.056
+                            0-1.511-1.276-2.241-2.673-2.241-1.267
+                            0-2.655.59-2.75
+                            2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0
+                            1.029-.394
+                            1.029-.927 0-.552-.42-.94-1.029-.94-.584
+                            0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
+                        </svg>
                     </div>
+
+
+                    <div class="col-sm form-check">
+                        <input class="form-check-input" type="radio"
+                            name="flexRadioDefault"
+                            id="flexRadioDefault2"
+                            value="1"
+                            (change)="onChange($event)">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Additional Filing
+                        </label>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                            height="16"
+                            fill="currentColor" class="bi
+                            bi-question-circle-fill ml-2"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496
+                                6.033h.825c.138
+                                0 .248-.113.266-.25.09-.656.54-1.134
+                                1.342-1.134.686 0
+                                1.314.343 1.314 1.168 0 .635-.374.927-.965
+                                1.371-.673.489-1.206 1.06-1.168
+                                1.987l.003.217a.25.25 0 0 0
+                                .25.246h.811a.25.25 0 0 0
+                                .25-.25v-.105c0-.718.273-.927
+                                1.01-1.486.609-.463 1.244-.977 1.244-2.056
+                                0-1.511-1.276-2.241-2.673-2.241-1.267
+                                0-2.655.59-2.75
+                                2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0
+                                1.029-.394
+                                1.029-.927 0-.552-.42-.94-1.029-.94-.584
+                                0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="ml-2" *ngIf="filingType === '1'">
-                    <div class="mb-2">Type <span class="red-color">*</span></div>
-                    <select class="form-control text-input-tax">
-                        <option>On-Time</option>
-                    </select>
+                <div class="my-3">
+                    <form [formGroup]="formDate">
+
+                        <div class="d-flex">
+                            <div>
+                                <div class="mb-2" *ngIf="filingType === '0'">VAT
+                                    Month <span
+                                        class="red-color">*</span></div>
+                                <div class="mb-2" *ngIf="filingType === '1'">Tax
+                                    Month <span
+                                        class="red-color">*</span></div>
+                                <div class="d-flex">
+
+                                    <select class="form-control form-control-sm mr-2
+                                        text-input-tax"
+                                        formControlName="month">
+                                        <ng-container *ngFor="let months of
+                                            monthSelect">
+                                            <option [ngValue]="months">{{months.Text}}</option>
+                                        </ng-container>
+                                    </select>
+
+                                    <select class="form-control form-control-sm text-input-tax"
+                                        formControlName="year">
+                                        <ng-container *ngFor="let years of
+                                            yearSelect">
+                                            <option [ngValue]="years">{{years}}</option>
+                                        </ng-container>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="ml-2" *ngIf="filingType === '1'">
+                                <div class="mb-2">Type <span class="red-color">*</span></div>
+                                <select class="form-control form-control-sm text-input-tax">
+                                    <option>On-Time</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </form>
-    </div>
 
-    <!-- <form class="my-3" [formGroup]="taxDetailForm" (ngSubmit)="nextStep()">
-    </form> -->
-    <b>2. Tax Computation</b>
-    <hr class="my-auto">
-    <div class="mb-2">
-        <b>Provide total value taxable electronic service </b>
-        <span class="red-color">*</span>
-    </div>
 
-    <form [formGroup]="formTax">
-        <div class="d-flex my-2">
-            <div class="content-text">1. Total value taxable electronic service
-                exclusive of VAT</div>
-            <div class="ml-auto">
-                <input type="number" class="form-control text-input-thb"
-                    formControlName="saleAmount"
-                    placeholder="0.00">
-            </div>
-            <span class="my-auto ml-2">THB</span>
-        </div>
-        <div class="d-flex my-2">
-            <div class="content-text">2. Total VAT to be remitted (7% of 1.)</div>
-            <div class="ml-auto">
-                <input type="number" class="form-control text-input-thb"
-                    formControlName="taxAmount"
-                    placeholder="0.00">
-            </div>
-            <span class="my-auto ml-2">THB</span>
-        </div>
-
-        <ng-container *ngIf="filingType === '1'">
-
+            <b>2. Tax Computation</b>
+            <hr class="my-auto">
             <div class="mb-2">
-                <b>In case late filling and payment, or additional filing</b>
+                <b>Provide total value taxable electronic service </b>
+                <span class="red-color">*</span>
             </div>
-            <div class="d-flex my-2">
-                <div class="content-text">3. Surcharge</div>
-                <div class="ml-auto">
-                    <input type="number" class="form-control text-input-thb"
-                        placeholder="{{ surcharge | number : '1.2-2' }}"
-                        Readonly>
-                </div>
-                <span class="my-auto ml-2">THB</span>
-            </div>
-            <div class="d-flex my-2">
-                <div class="content-text">4 Penalty</div>
-                <div class="ml-auto">
-                    <input type="number" class="form-control text-input-thb"
-                        formControlName="penalty"
-                        placeholder="{{ 200 | number : '1.2-2' }}" Readonly>
-                </div>
-                <span class="my-auto ml-2">THB</span>
-            </div>
-            <div class="d-flex my-2">
-                <div class="content-text">5 Total amount of VAT, surcharge, and
-                    penalty to be remitted (2.+ 3.+ 4.)</div>
-                <div class="ml-auto">
-                    <input type="number" class="form-control text-input-thb"
-                        formControlName="totalAmount"
-                        value="{{ totalAmount | number : '1.2-2'}}"
-                        placeholder="{{ totalAmount | number : '1.2-2'}}"
-                        Readonly>
-                </div>
-                <span class="my-auto ml-2">THB</span>
-            </div>
-        </ng-container>
-    </form>
-</div>
 
-<div class="d-flex mt-4">
-    <button type="button" class="btn btn-outline-dark mr-2">Back</button>
-    <button type="submit" class="btn btn-dark" (click)="nextStep()">Next</button>
-</div>
+            <form [formGroup]="formTax" #form="ngForm">
+                <div class="d-flex my-2">
+                    <div class="content-text pr-2">1. Total value taxable electronic
+                        service
+                        exclusive of VAT</div>
+                    <div class="ml-auto">
+                        <input type="number" class="form-control form-control-sm
+                            text-input-thb"
+                            formControlName="saleAmount"
+                            name="saleAmount"
+                            placeholder="0.00"
+                            (change)="formatNumber($event)"
+                            required>
+                    </div>
+                    <span class="my-auto ml-2">THB</span>
+                </div>
+                <div class="d-flex my-2">
+                    <div class="content-text pr-2">2. Total VAT to be remitted (7% of
+                        1.)</div>
+                    <div class="ml-auto">
+                        <input type="number" class="form-control form-control-sm
+                            text-input-thb"
+                            formControlName="taxAmount"
+                            name="taxAmount"
+                            placeholder="0.00"
+                            (change)="formatNumber($event)">
+                    </div>
+                    <span class="my-auto ml-2">THB</span>
+                </div>
+
+                <ng-container *ngIf="filingType === '1'">
+                    <div class="mb-2">
+                        <b>In case late filling and payment, or additional
+                            filing</b>
+                    </div>
+                    <div class="d-flex my-2">
+                        <div class="content-text pr-2">3. Surcharge</div>
+                        <div class="ml-auto">
+                            <input type="number" class="form-control
+                                form-control-sm text-input-thb"
+                                formControlName="surcharge"
+                                placeholder="{{ surcharge | number : '1.2-2' }}"
+                                Readonly>
+                        </div>
+                        <span class="my-auto ml-2">THB</span>
+                    </div>
+                    <div class="d-flex my-2">
+                        <div class="content-text pr-2">4 Penalty</div>
+                        <div class="ml-auto">
+                            <input type="number" class="form-control form-control-sm
+                                text-input-thb"
+                                formControlName="penalty"
+                                placeholder="{{ 200.00 | number : '1.2-2' }}"
+                                Readonly>
+                        </div>
+                        <span class="my-auto ml-2">THB</span>
+                    </div>
+                    <div class="d-flex my-2">
+                        <div class="content-text pr-2">5 Total amount of VAT,
+                            surcharge, and
+                            penalty to be remitted (2.+ 3.+ 4.)</div>
+                        <div class="ml-auto">
+                            <input type="number" class="form-control form-control-sm
+                                text-input-thb"
+                                formControlName="totalAmount"
+                                placeholder="{{ 0.00 | number :
+                                '1.2-2'}}"
+                                Readonly>
+                        </div>
+                        <span class="my-auto ml-2">THB</span>
+                    </div>
+                </ng-container>
+            </form>
+        </div>
+
+        <div class="d-flex mt-4">
+            <button type="button" class="btn btn-outline-dark mr-2">Back</button>
+            <button type="submit" class="btn btn-dark" (click)="nextStep()">Next</button>
+        </div>
