@@ -43,7 +43,7 @@
                             formControlName="month">
                             <ng-container *ngFor="let months of
                                 monthSelect">
-                                <option [ngValue]="months">{{months.Text}}</option>
+                                <option [ngValue]="months" [disabled]="monthNow === months.Value">{{months.Text}}</option>
                             </ng-container>
                         </select>
 
@@ -81,8 +81,8 @@
             <div class="content-text">1. Total value taxable electronic service
                 exclusive of VAT</div>
             <div class="ml-auto">
-                <input type="number" class="form-control text-input-thb"
-                    formControlName="saleAmount"
+                <input type="text" class="form-control text-input-thb"
+                    formControlName="saleAmount" [(ngModel)]="saleAmount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" (change)="onChangeformatnumber($event)"
                     placeholder="0.00">
             </div>
             <span class="my-auto ml-2">THB</span>
@@ -90,8 +90,8 @@
         <div class="d-flex my-2">
             <div class="content-text">2. Total VAT to be remitted (7% of 1.)</div>
             <div class="ml-auto">
-                <input type="number" class="form-control text-input-thb"
-                    formControlName="taxAmount"
+                <input type="text" class="form-control text-input-thb"
+                    formControlName="taxAmount" [(ngModel)]="taxAmount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" (change)="onChangeTaxAmount($event)"
                     placeholder="0.00">
             </div>
             <span class="my-auto ml-2">THB</span>
@@ -138,5 +138,5 @@
 
 <div class="d-flex mt-4">
     <button type="button" class="btn btn-outline-dark mr-2">Back</button>
-    <button type="submit" class="btn btn-dark" (click)="nextStep()">Next</button>
+    <button type="submit" class="btn btn-dark" [disabled]="validateBtn()" (click)="validateForm()">Next</button>
 </div>

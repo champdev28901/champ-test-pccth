@@ -22,13 +22,19 @@ export class InputTaxComponent implements OnInit {
   monthSelect = month;
   yearSelect = year;
   typeSelect = type;
+  saleAmount: number | any = null;
+  taxAmount: number | any = null;
+  monthNow: string | any;
 
-  constructor(private taxService: TaxService, private router: Router) {}
+  constructor(private taxService: TaxService, private router: Router) {
+    let monthList = new Date().getMonth() + 1;
+    this.monthNow = monthList.toString()
+  }
 
   ngOnInit(): void {
     // this.initDateForm()
     this.formDate = new FormGroup({
-      month: new FormControl(this.monthSelect[0]),
+      month: new FormControl(this.monthSelect[0].Value === this.monthNow ? this.monthSelect[1]: this.monthSelect[0]),
       year: new FormControl(this.yearSelect[0]),
     });
 
@@ -53,9 +59,35 @@ export class InputTaxComponent implements OnInit {
     return this.surcharge + this.f.taxAmount.value + 200;
   }
 
+  onChangeformatnumber(data: any): void {
+    if (data.target.value === '') {
+      this.saleAmount = ''
+      this.taxAmount = ''
+    } else {
+      this.saleAmount = String(parseFloat(String(data.target.value)).toFixed(2)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+      this.taxAmount = String(parseFloat(String(data.target.value * 0.07)).toFixed(2)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    }
+  }
+
+  onChangeTaxAmount(data: any): void {
+    if (data.target.value === '') {
+      this.saleAmount = ''
+      this.taxAmount = ''
+    } else {
+      this.saleAmount = String(parseFloat(String(data.target.value / 0.07)).toFixed(2)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+      this.taxAmount = String(parseFloat(String(data.target.value)).toFixed(2)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+      // if (((Number(this.saleAmount) * 0.07) + 20 <= Number(data.target.value)) && ((Number(this.saleAmount) * 0.07) - 20 >= Number(data.target.value))) {
+      //   this.saleAmount = String(parseFloat(String(data.target.value / 0.07)).toFixed(2)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+      //   this.taxAmount = String(parseFloat(String(data.target.value)).toFixed(2)).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+      // } else {
+      //   alert("ส่วนต่างมากกว่า 20");
+      // }
+
+    }
+  }
+
 
   onChange(event: any): void {
-    console.log(event.target.value);
     this.filingType = event.target.value;
   }
 
@@ -72,4 +104,23 @@ export class InputTaxComponent implements OnInit {
   backStep() {
     this.filingType = '0';
   }
+
+  validateForm() {
+    const typeNumber = Number(this.filingType);
+    if (this.totalAmount && this.taxAmount && this.saleAmount && this.formDate.value && this.formTax.value && this.typeSelect[typeNumber]) {
+      this.nextStep();
+    } else {
+      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    }
+  }
+
+  validateBtn(): boolean {
+    const typeNumber = Number(this.filingType);
+    if (this.totalAmount && this.taxAmount && this.saleAmount && this.formDate.value && this.formTax.value && this.typeSelect[typeNumber]) {
+      return false
+    } else {
+      return true
+    }
+  }
+
 }
