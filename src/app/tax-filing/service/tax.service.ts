@@ -29,7 +29,7 @@ export class TaxService {
         taxAmount: stateTax.taxAmount,
         surcharge: stateTax.surcharge,
         penalty: stateTax.penalty,
-        totalAmount: stateTax.penalty,
+        totalAmount: stateTax.totalAmount,
       };
     }
     this.taxJson = taxString;
