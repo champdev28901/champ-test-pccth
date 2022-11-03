@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { taxData } from '../../model/tax-data';
 import { TaxService } from '../../service/tax.service';
 
@@ -7,21 +8,27 @@ import { TaxService } from '../../service/tax.service';
   templateUrl: './review-tax.component.html',
   styleUrls: ['./review-tax.component.scss'],
 })
-export class ReviewTaxComponent implements OnInit {
-  dataSet: any;
-  constructor(private taxService: TaxService) {}
+export class ReviewTaxComponent implements OnInit, AfterViewInit {
+  dataSet: taxData | any;
+  constructor(private taxService: TaxService, private router: Router) {}
 
   ngOnInit(): void {
-    this.check();
+    this.dataInit();
   }
 
-  check() {
-    this.dataSet = this.taxService.taxGet();
+  dataInit() {
+    return (this.dataSet = this.taxService.taxGet());
+  }
+
+  onCheck() {
+    if (!this.dataSet) this.router.navigate(['tax/input']);    
+  }
+
+  ngAfterViewInit(): void {
+    this.onCheck();
   }
 
   getJson() {
-    alert(JSON.stringify(this.dataSet , null, 4));
-
+    alert(JSON.stringify(this.dataSet, null, 4));
   }
-
 }
